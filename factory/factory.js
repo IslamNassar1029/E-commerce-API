@@ -70,7 +70,7 @@ const deleteOne = (Model) =>
 /*-----------------------------------------------------------------*/
 const getOneByQuery = (Model,component) =>
   asyncHandler(async (req, res, next) => {
-    const { id } = req.params;
+    const { id } = req.headers;
     const document = await Model.findOne({ [component] :id});
     if (!document) {
       return next(new ApiError(`No document for this id ${id}`, 404));
@@ -87,13 +87,13 @@ const updateOneByQuery = (Model,component,updatedBody) =>
 
     if (!document) {
       return next(
-        new ApiError(`No document for this id ${req.params.id}`, 404)
+        new ApiError(`No document for this id ${id}`, 404)
       );
     }
     res.status(200).json({ data: document });
   });
   /*-----------------------------------------------------------------*/
-const deleteMany = (Model,component) =>
+const deleteOneByQuery = (Model,component) =>
 asyncHandler(async (req, res, next) => {
   const { id } = req.params;
   const document = await Model.deleteMany({ [component]: id });
@@ -103,7 +103,17 @@ asyncHandler(async (req, res, next) => {
   }
   res.status(204).send();
 });
-
+  /*-----------------------------------------------------------------*/
+  const deleteMany = (Model,component) =>
+  asyncHandler(async (req, res, next) => {
+    const { id } = req.headers;
+    const document = await Model.deleteMany({ [component]: id });
+  
+    if (!document) {
+      return next(new ApiError(`No document for this id ${id}`, 404));
+    }
+    res.status(204).send();
+  });
 /*-----------------------------------------------------------------*/
 module.exports = {
   getAll,
@@ -112,6 +122,8 @@ module.exports = {
   updateOne,
   deleteOne,
   getOneByQuery,
-  updateOneByQuery
+  updateOneByQuery,
+  deleteOneByQuery,
+  deleteMany
 };
 /*-----------------------------------------------------------------*/

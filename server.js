@@ -47,6 +47,9 @@ app.use("/api/v1/products", productRoute);
 //order Route
 app.use("/api/v1/orders",orderRoute);
 /*-----------------------------------------------------------------*/
+//shoppingCart Route
+app.use("/api/v1/orders",orderRoute);
+/*-----------------------------------------------------------------*/
 //Admin Route
 app.use("api/v1/admin",adminRoute);
 /*-----------------------------------------------------------------*/

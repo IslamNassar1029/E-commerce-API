@@ -7,6 +7,7 @@ const userToBeRemovedSchema = new mongoose.Schema({
   });
 const UserToBeRemoved = mongoose.model('UserToBeRemoved', userToBeRemovedSchema);
 //end
+
 const shoppingCartSchema= new mongoose.Schema({
     user:{
         type:mongoose.Schema.Types.ObjectId,
