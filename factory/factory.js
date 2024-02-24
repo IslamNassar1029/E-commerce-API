@@ -71,7 +71,7 @@ const deleteOne = (Model) =>
 const getOneByQuery = (Model,component) =>
   asyncHandler(async (req, res, next) => {
     const { id } = req.params;
-    const document = await Model.findOne({ component :id});
+    const document = await Model.findOne({ [component] :id});
     if (!document) {
       return next(new ApiError(`No document for this id ${id}`, 404));
     }
@@ -80,7 +80,7 @@ const getOneByQuery = (Model,component) =>
 /*-----------------------------------------------------------------*/
 const updateOneByQuery = (Model,component,updatedBody) =>
   asyncHandler(async (req, res, next) => {
-    const document = await Model.findOneAndUpdate({ component: req.body.user }, updatedBody, {
+    const document = await Model.findOneAndUpdate({ [component]: req.body.user }, updatedBody, {
       new: true,
     });
 
