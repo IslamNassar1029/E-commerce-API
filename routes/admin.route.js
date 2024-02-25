@@ -12,9 +12,9 @@ const {
     getCategories,
     } = require("../controllers/category.controller");
 
-// const {
-//     getUsers,
-//     } = require("../controllers/user.controller");
+ const {
+     getUsers,
+     } = require("../controllers/user.controller");
 
 const router = express.Router();
 /*-----------------------------------------------------------------*/
@@ -26,5 +26,5 @@ router.get("/products", getProducts);
 // Get All categories
 router.get("/categories", getCategories);
 // Get All Users
-// router.get("/users", getUsers);
+ router.get("/users", getUsers);
 /*-----------------------------------------------------------------*/
