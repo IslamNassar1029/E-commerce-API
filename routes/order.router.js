@@ -21,16 +21,16 @@ const router = express.Router();
 router.get("/", getOrders);
 /*-----------------------------------------------------------------*/
 // Get Order by Id
-router.get("/:id", getOrder);
+router.get("/:id", getOrderValidator, getOrder);
 /*-----------------------------------------------------------------*/
 // Create new Order
-router.post("/", createOrder);
+router.post("/", createOrderValidator, createOrder);
 /*-----------------------------------------------------------------*/
 // Update Order
-router.patch("/:id",  updateOrder);
+router.patch("/:id", updateOrderValidator, updateOrder);
 /*-----------------------------------------------------------------*/
 // Delete Order by Id
-router.delete("/:id", deleteOrder);
+router.delete("/:id", deleteOrderValidator, deleteOrder);
 /*-----------------------------------------------------------------*/
 module.exports = router;
 /*-----------------------------------------------------------------*/

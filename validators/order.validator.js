@@ -1,5 +1,4 @@
-const slugify=require("slugify");
-const {check, body}=require("express-validator");
+const {check}=require("express-validator");
 const validatorMiddleware=require("../middlewares/validatorMiddleware");
 //----------------------------------------
 const getOrderValidator = [
@@ -7,27 +6,39 @@ const getOrderValidator = [
     validatorMiddleware,
 ];
 /*-----------------------------------------------------------------*/
-const createOrderValidator = [
-    check("name")
-    .notEmpty()
-    .withMessage("Order required")
-    .isLength({ min: 3 })
-    .withMessage("Too short Order name")
-    .isLength({ max: 32 })
-    .withMessage("Too long Order name")
-    .custom((val, { req }) => {
-        req.body.slug = slugify(val);
-        return true;
-}),
-    validatorMiddleware,
+const createOrderValidator =[
+ check('user')
+.notEmpty()
+.withMessage('User ID is required')
+.isMongoId()
+.withMessage('Invalid User ID format'),
+check('products')
+.isArray({ min: 1 })
+.withMessage('At least one product must be included in the order'),
+check('products.*.product')
+.notEmpty()
+.withMessage('Product ID is required')
+.isMongoId()
+.withMessage('Invalid Product ID format'),
+check('products.*.quantity')
+.notEmpty()
+.withMessage('Quantity is required')
+.isInt({ min: 1 })
+.withMessage('Quantity must be at least 1'),
+check('totalPrice')
+.notEmpty()
+.withMessage('Total price is required')
+.isNumeric()
+.withMessage('Total price must be a number'),
+check('status')
+.optional()
+.isIn(['placed', 'shipped', 'delivered', 'cancelled'])
+.withMessage('Invalid status'),
+validatorMiddleware,
 ];
 /*-----------------------------------------------------------------*/
 const updateOrderValidator = [
     check("id").isMongoId().withMessage("Invalid Order id format"),
-    body("name").custom((val, { req }) => {
-    req.body.slug = slugify(val);
-    return true;
-    }),
     validatorMiddleware,
 ];
 /*-----------------------------------------------------------------*/

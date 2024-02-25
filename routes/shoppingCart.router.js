@@ -1,6 +1,6 @@
 const express = require("express");
 const {
-    addToCartValidator,updateCartItemValidator,removeFromCartValidator,clearCartValidator
+    addToCartValidator,updateCartItemValidator,removeFromCartValidator
 } = require("../validators/shoppingCart.validator");
 
 const {
@@ -15,13 +15,13 @@ const router = express.Router();
 router.get("/", getCart);
 /*-----------------------------------------------------------------*/
 // Get Category by Id
-router.post("/add", createCart);
+router.post("/add",addToCartValidator,createCart);
 /*-----------------------------------------------------------------*/
 // Create new Category
-router.patch("/update/:id", updateShoppingCart);
+router.patch("/update/:id", updateCartItemValidator,updateShoppingCart);
 /*-----------------------------------------------------------------*/
 // Update Category
-router.delete("/delete/:id", deleteShoppingCart);
+router.delete("/delete/:id", removeFromCartValidator,deleteShoppingCart);
 /*-----------------------------------------------------------------*/
 // Delete Category by Id
 router.delete("/clear", deleteShoppingCartAllToOneUser);
