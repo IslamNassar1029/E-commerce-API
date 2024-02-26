@@ -1,4 +1,5 @@
 const express = require("express");
+const AuthService = require("../controllers/Auth.controller");
 const {
   createSubCategory,
   getSubCategory,
@@ -20,25 +21,33 @@ const {
 // We need to access categoryId from category route
 const router = express.Router({ mergeParams: true });
 /*-----------------------------------------------------------------*/
+// Create new SubCategory
 // Get All SubCategories
-router.get("/", createFilterObj, getSubCategories);
+router
+  .route("/")
+  .post(setCategoryIdToBody, createSubCategoryValidator, createSubCategory)
+  .get(createFilterObj, getSubCategories);
 /*-----------------------------------------------------------------*/
 // Get SubCategory by Id
-router.get("/:id", getSubCategoryValidator, getSubCategory);
-/*-----------------------------------------------------------------*/
-// Create new SubCategory
-router.post(
-  "/",
-  setCategoryIdToBody,
-  createSubCategoryValidator,
-  createSubCategory
-);
-/*-----------------------------------------------------------------*/
 // Update SubCategory
-router.patch("/:id", updateSubCategoryValidator, updateSubCategory);
-/*-----------------------------------------------------------------*/
 // Delete SubCategory by Id
-router.delete("/:id", deleteSubCategoryValidator, deleteSubCategory);
+router
+  .route("/:id")
+  .get(
+    AuthService.protect,
+    AuthService.allowedTo("admin", "manager"),
+    getSubCategoryValidator, 
+    getSubCategory)
+  .patch(
+    AuthService.protect,
+    AuthService.allowedTo("admin", "manager"),
+    updateSubCategoryValidator, 
+    updateSubCategory)
+  .delete(
+    AuthService.protect,
+    AuthService.allowedTo("admin"),
+    deleteSubCategoryValidator,
+    deleteSubCategory);
 /*-----------------------------------------------------------------*/
 module.exports = router;
 /*-----------------------------------------------------------------*/
