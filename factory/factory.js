@@ -70,8 +70,8 @@ const deleteOne = (Model) =>
 /*-----------------------------------------------------------------*/
 const getOneByQuery = (Model,component) =>
   asyncHandler(async (req, res, next) => {
-    const { id } = req.params;
-    const document = await Model.findOne({ component :id});
+    const { id } = req.headers;
+    const document = await Model.findOne({ [component] :id});
     if (!document) {
       return next(new ApiError(`No document for this id ${id}`, 404));
     }
@@ -80,16 +80,39 @@ const getOneByQuery = (Model,component) =>
 /*-----------------------------------------------------------------*/
 const updateOneByQuery = (Model,component,updatedBody) =>
   asyncHandler(async (req, res, next) => {
-    const document = await Model.findOneAndUpdate({ component: req.body.user }, updatedBody, {
+    const { id } = req.params;
+    const document = await Model.findOneAndUpdate({ [component]:id  }, updatedBody, {
       new: true,
     });
 
     if (!document) {
       return next(
-        new ApiError(`No document for this id ${req.params.id}`, 404)
+        new ApiError(`No document for this id ${id}`, 404)
       );
     }
     res.status(200).json({ data: document });
+  });
+  /*-----------------------------------------------------------------*/
+const deleteOneByQuery = (Model,component) =>
+asyncHandler(async (req, res, next) => {
+  const { id } = req.params;
+  const document = await Model.deleteMany({ [component]: id });
+
+  if (!document) {
+    return next(new ApiError(`No document for this id ${id}`, 404));
+  }
+  res.status(204).send();
+});
+  /*-----------------------------------------------------------------*/
+  const deleteMany = (Model,component) =>
+  asyncHandler(async (req, res, next) => {
+    const { id } = req.headers;
+    const document = await Model.deleteMany({ [component]: id });
+  
+    if (!document) {
+      return next(new ApiError(`No document for this id ${id}`, 404));
+    }
+    res.status(204).send();
   });
 /*-----------------------------------------------------------------*/
 module.exports = {
@@ -99,6 +122,8 @@ module.exports = {
   updateOne,
   deleteOne,
   getOneByQuery,
-  updateOneByQuery
+  updateOneByQuery,
+  deleteOneByQuery,
+  deleteMany
 };
 /*-----------------------------------------------------------------*/

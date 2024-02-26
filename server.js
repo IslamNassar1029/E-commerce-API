@@ -11,8 +11,12 @@ const categoryRoute = require("./routes/category.router");
 const subCategoryRoute = require("./routes/subCategory.router");
 const brandRoute = require("./routes/brand.router");
 const productRoute = require("./routes/product.router");
+<<<<<<< HEAD
 const UserRoute = require("./routes/User.router");
 const AuthRoute = require("./routes/Auth.router");
+=======
+const orderRoute= require("./routes/order.router")
+>>>>>>> ab1161ecb6ff608d76827e777c7b5cdfeb62e0f5
 /*-----------------------------------------------------------------*/
 // Connect with db
 dbConnection();
@@ -45,11 +49,22 @@ app.use("/api/v1/brands", brandRoute);
 // Product Route
 app.use("/api/v1/products", productRoute);
 /*-----------------------------------------------------------------*/
+<<<<<<< HEAD
 //user route
 app.use("/api/v1/users", UserRoute);
 /*-----------------------------------------------------------------*/
 //Auth route
 app.use("/api/v1/auth", AuthRoute);
+=======
+//order Route
+app.use("/api/v1/orders",orderRoute);
+/*-----------------------------------------------------------------*/
+//shoppingCart Route
+app.use("/api/v1/orders",orderRoute);
+/*-----------------------------------------------------------------*/
+//Admin Route
+app.use("api/v1/admin",adminRoute);
+>>>>>>> ab1161ecb6ff608d76827e777c7b5cdfeb62e0f5
 /*-----------------------------------------------------------------*/
 app.all("*", (req, res, next) => {
   // Create error and send it to error handling middleware

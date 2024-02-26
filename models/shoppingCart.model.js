@@ -7,13 +7,23 @@ const userToBeRemovedSchema = new mongoose.Schema({
   });
 const UserToBeRemoved = mongoose.model('UserToBeRemoved', userToBeRemovedSchema);
 //end
+
 const shoppingCartSchema= new mongoose.Schema({
     user:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:'UserToBeRemoved',
+        ref:'User',
         required:[true, "User of the shopping cart is required"],
     },
-    products:[productsIntheOrderSchema]
+    product: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product',
+        required: true
+      },
+    quantity: {
+        type: Number,
+        required: true,
+        default: 1
+      }
     },
     { timestamps: true }
 )
