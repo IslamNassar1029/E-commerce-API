@@ -11,6 +11,9 @@ const categoryRoute = require("./routes/category.router");
 const subCategoryRoute = require("./routes/subCategory.router");
 const brandRoute = require("./routes/brand.router");
 const productRoute = require("./routes/product.router");
+const UserRoute = require("./routes/User.router");
+const AuthRoute = require("./routes/Auth.router");
+const orderRoute= require("./routes/order.router")
 const stripe = require("./routes/stripe.router");
 const reviewRoute = require("./routes/review.router");
 /*-----------------------------------------------------------------*/
@@ -45,6 +48,20 @@ app.use("/api/v1/brands", brandRoute);
 // Product Route
 app.use("/api/v1/products", productRoute);
 /*-----------------------------------------------------------------*/
+//user route
+app.use("/api/v1/users", UserRoute);
+/*-----------------------------------------------------------------*/
+//Auth route
+app.use("/api/v1/auth", AuthRoute);
+//order Route
+app.use("/api/v1/orders",orderRoute);
+/*-----------------------------------------------------------------*/
+//shoppingCart Route
+app.use("/api/v1/orders",orderRoute);
+/*-----------------------------------------------------------------*/
+//Admin Route
+app.use("api/v1/admin",adminRoute);
+/*-----------------------------------------------------------------*/
 app.use("/api/v1/stripe", stripe);
 /*-----------------------------------------------------------------*/
 // Review Route
@@ -58,7 +75,7 @@ app.all("*", (req, res, next) => {
 // Global error handling middleware for express
 app.use(globalError);
 /*-----------------------------------------------------------------*/
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 3000;
 const server = app.listen(port, () => {
   console.log(`listening on port ${port}.....`);
   console.log(`Server running at http://localhost:${port}.....`);

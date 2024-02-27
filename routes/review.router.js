@@ -16,7 +16,7 @@ const {
     setProductIdAndUserIdToBody
 } = require("../controllers/review.controller");
 
-const authService = require('');
+const authService = require('../controllers/Auth.controller');
 
 const router = express.Router({ mergeParams: true });
 

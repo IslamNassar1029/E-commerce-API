@@ -24,7 +24,7 @@ const productsIntheOrderSchema = new mongoose.Schema({
 const orderSchema= new mongoose.Schema({
     user:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:'UserToBeRemoved',
+        ref:'User',
         required:[true, "User that placed the order is required"],
     },
     products:[productsIntheOrderSchema],
