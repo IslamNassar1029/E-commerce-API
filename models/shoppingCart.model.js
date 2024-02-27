@@ -1,12 +1,5 @@
 const mongoose = require("mongoose");
-/*-----------------------------------------------------------------*/
-//to be removed
-const userToBeRemovedSchema = new mongoose.Schema({
-    name: String,
-    price: Number,
-  });
-const UserToBeRemoved = mongoose.model('UserToBeRemoved', userToBeRemovedSchema);
-//end
+
 
 const shoppingCartSchema= new mongoose.Schema({
     user:{
