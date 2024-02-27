@@ -14,8 +14,8 @@ const productRoute = require("./routes/product.router");
 const UserRoute = require("./routes/User.router");
 const AuthRoute = require("./routes/Auth.router");
 const orderRoute= require("./routes/order.router")
-const stripe = require("./routes/stripe.router");
 const reviewRoute = require("./routes/review.router");
+const adminRoute = require("./routes/admin.route");
 /*-----------------------------------------------------------------*/
 // Connect with db
 dbConnection();
@@ -60,9 +60,9 @@ app.use("/api/v1/orders",orderRoute);
 app.use("/api/v1/orders",orderRoute);
 /*-----------------------------------------------------------------*/
 //Admin Route
-app.use("api/v1/admin",adminRoute);
+app.use("/api/v1/admin",adminRoute);
 /*-----------------------------------------------------------------*/
-app.use("/api/v1/stripe", stripe);
+// app.use("/api/v1/stripe", stripe);
 /*-----------------------------------------------------------------*/
 // Review Route
 app.use("/api/v1/reviews", reviewRoute);

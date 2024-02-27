@@ -14,7 +14,7 @@ const createOrder = factory.createOne();
 const updateOrder = factory.updateOne();
 const deleteOrder = factory.deleteOne();
 
-exports.checkoutSession = expressAsyncHandler(async (req, res, next) => {
+const checkoutSession = expressAsyncHandler(async (req, res, next) => {
     const taxPrice = 0;
     const shippingPrice = 0;
 
@@ -45,7 +45,7 @@ exports.checkoutSession = expressAsyncHandler(async (req, res, next) => {
         success_url: `${req.protocol}://${req.get('host')}/orders`,
         cancel_url: `${req.protocol}://${req.get('host')}/cart`,
         customer_email: req.user.email,
-        client_refernece_id: req.params.cartId,
+        client_reference_id: req.params.cartId,
         metadata: req.body.shippingAddress,
     });
     res.status(200).json({status: 'success', session})
@@ -58,6 +58,7 @@ module.exports = {
     getOrders,
     createOrder,
     updateOrder,
-    deleteOrder
+    deleteOrder,
+    checkoutSession
 };
 
