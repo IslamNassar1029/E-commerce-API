@@ -1,4 +1,5 @@
 const express = require("express");
+const AuthService =require('../controllers/Auth.controller')
 const {
   getCategoryValidator,
   createCategoryValidator,
@@ -30,7 +31,12 @@ router.get("/", getCategories);
 router.get("/:id", getCategoryValidator, getCategory);
 /*-----------------------------------------------------------------*/
 // Create new Category
-router.post("/", createCategoryValidator, createCategory);
+router.route("/")
+.post(
+   AuthService.protect,
+   AuthService.allowedTo("admin","manager"),
+   createCategoryValidator, 
+   createCategory);
 /*-----------------------------------------------------------------*/
 // Update Category
 router.patch("/:id", updateCategoryValidator, updateCategory);

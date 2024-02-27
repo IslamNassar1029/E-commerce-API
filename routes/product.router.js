@@ -1,4 +1,5 @@
 const express = require("express");
+const AuthService = require("../controllers/Auth.controller");
 const {
   createProductValidator,
   getProductValidator,
@@ -16,20 +17,37 @@ const {
 
 const router = express.Router();
 /*-----------------------------------------------------------------*/
-// Get All Products
-router.get("/", getProducts);
+// Get All Brands
+// Create new Brand
+router
+  .route("/")
+  .get(getProducts)
+  .post(
+    AuthService.protect,
+    AuthService.allowedTo("admin", "manager"),
+    createProductValidator,
+    createProduct
+  );
+
 /*-----------------------------------------------------------------*/
-// Get Product by Id
-router.get("/:id", getProductValidator, getProduct);
-/*-----------------------------------------------------------------*/
-// Create new Product
-router.post("/", createProductValidator, createProduct);
-/*-----------------------------------------------------------------*/
-// Update Product
-router.patch("/:id", updateProductValidator, updateProduct);
-/*-----------------------------------------------------------------*/
-// Delete Product by Id
-router.delete("/:id", deleteProductValidator, deleteProduct);
+//get product by Id
+// Update product
+// Delete product by Id
+router
+  .route("/:id")
+  .get(getProductValidator, getProduct)
+  .put(
+    AuthService.protect,
+    AuthService.allowedTo("admin", "manager"),
+    updateProductValidator,
+    updateProduct
+  )
+  .delete(
+    AuthService.protect,
+    AuthService.allowedTo("admin"),
+    deleteProductValidator,
+    deleteProduct
+  );
 /*-----------------------------------------------------------------*/
 module.exports = router;
 /*-----------------------------------------------------------------*/
