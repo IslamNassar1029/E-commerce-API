@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 
-const shoppingCartSchema= new mongoose.Schema({
+const shoppingCartSchema = new mongoose.Schema({
     user:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'User',
@@ -28,7 +28,8 @@ shoppingCartSchema.pre(/^find/, function (next) {
   });
   /*-----------------------------------------------------------------*/
 // Class Product
-const ShoppingCartModel = mongoose.model("ShoppingCart", ShoppingCartSchema);
+const ShoppingCartModel = mongoose.model("ShoppingCart", shoppingCartSchema);
+
 /*-----------------------------------------------------------------*/
 module.exports = ShoppingCartModel;
 /*-----------------------------------------------------------------*/
