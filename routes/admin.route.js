@@ -1,5 +1,8 @@
 const express = require("express");
 
+const AuthService = require("../controllers/Auth.controller");
+
+
 const {
 getOrders,
 } = require("../controllers/order.controller");
@@ -20,12 +23,16 @@ const router = express.Router();
 /*-----------------------------------------------------------------*/
 
 // Get All Orders
-router.get("/orders", getOrders);
+router.get("/orders",AuthService.protect,
+AuthService.allowedTo("admin"), getOrders);
 // Get All products
-router.get("/products", getProducts);
+router.get("/products",AuthService.protect,
+AuthService.allowedTo("admin"), getProducts);
 // Get All categories
-router.get("/categories", getCategories);
+router.get("/categories",AuthService.protect,
+AuthService.allowedTo("admin"), getCategories);
 // Get All Users
-router.get("/users", getUsers);
+router.get("/users",AuthService.protect,
+AuthService.allowedTo("admin"), getUsers);
 /*-----------------------------------------------------------------*/
 module.exports = router;

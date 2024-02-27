@@ -23,7 +23,8 @@ const router = express.Router();
 router.get('/checkout-session/:cartId', authService.allowedTo('user'), checkoutSession);
 
 // Get All Orders
-router.get("/", getOrders);
+
+router.get("/",authService.allowedTo('admin'), getOrders);
 /*-----------------------------------------------------------------*/
 // Get Order by Id
 router.get("/:id", getOrderValidator, getOrder);
