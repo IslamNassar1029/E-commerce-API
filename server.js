@@ -11,6 +11,8 @@ const categoryRoute = require("./routes/category.router");
 const subCategoryRoute = require("./routes/subCategory.router");
 const brandRoute = require("./routes/brand.router");
 const productRoute = require("./routes/product.router");
+const stripe = require("./routes/stripe.router");
+const reviewRoute = require("./routes/review.router");
 /*-----------------------------------------------------------------*/
 // Connect with db
 dbConnection();
@@ -42,6 +44,11 @@ app.use("/api/v1/brands", brandRoute);
 /*-----------------------------------------------------------------*/
 // Product Route
 app.use("/api/v1/products", productRoute);
+/*-----------------------------------------------------------------*/
+app.use("/api/v1/stripe", stripe);
+/*-----------------------------------------------------------------*/
+// Review Route
+app.use("/api/v1/reviews", reviewRoute);
 /*-----------------------------------------------------------------*/
 app.all("*", (req, res, next) => {
   // Create error and send it to error handling middleware

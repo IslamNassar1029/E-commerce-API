@@ -26,10 +26,19 @@ const getAll = (Model, modelName = "") =>
       .json({ results: documents.length, paginationResult, data: documents });
   });
 /*-----------------------------------------------------------------*/
-const getOne = (Model) =>
+const getOne = (Model, populationOpt) =>
   asyncHandler(async (req, res, next) => {
     const { id } = req.params;
-    const document = await Model.findById(id);
+    
+    //Build query
+    let query = Model.findById(id);
+    if (populationOpt) {
+      query = query.populate(populationOpt);
+    }
+
+    //Execute query
+    const document = await query;
+
     if (!document) {
       return next(new ApiError(`No document for this id ${id}`, 404));
     }
@@ -53,6 +62,8 @@ const updateOne = (Model) =>
         new ApiError(`No document for this id ${req.params.id}`, 404)
       );
     }
+    //Trigger "save" event
+    document.save();
     res.status(200).json({ data: document });
   });
 /*-----------------------------------------------------------------*/
@@ -64,21 +75,23 @@ const deleteOne = (Model) =>
     if (!document) {
       return next(new ApiError(`No document for this id ${id}`, 404));
     }
+    //Trigger "remove" event
+    document.remove();
     res.status(204).send();
   });
 
 /*-----------------------------------------------------------------*/
-const getOneByQuery = (Model,component) =>
+const getOneByQuery = (Model, component) =>
   asyncHandler(async (req, res, next) => {
     const { id } = req.params;
-    const document = await Model.findOne({ component :id});
+    const document = await Model.findOne({ component: id });
     if (!document) {
       return next(new ApiError(`No document for this id ${id}`, 404));
     }
     res.status(200).json({ data: document });
   });
 /*-----------------------------------------------------------------*/
-const updateOneByQuery = (Model,component,updatedBody) =>
+const updateOneByQuery = (Model, component, updatedBody) =>
   asyncHandler(async (req, res, next) => {
     const document = await Model.findOneAndUpdate({ component: req.body.user }, updatedBody, {
       new: true,

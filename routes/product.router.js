@@ -14,6 +14,8 @@ const {
   deleteProduct,
 } = require("../controllers/product.controller");
 
+const reviewsRoute = require('./review.router');
+
 const router = express.Router();
 /*-----------------------------------------------------------------*/
 // Get All Products
@@ -33,3 +35,10 @@ router.delete("/:id", deleteProductValidator, deleteProduct);
 /*-----------------------------------------------------------------*/
 module.exports = router;
 /*-----------------------------------------------------------------*/
+
+//Nested routes
+
+//POST /products/productId/reviews
+//GET  /products/productId/reviews
+//GET  /products/productId/reviews/reviewId
+router.use("/:productId/reviews", reviewsRoute);
