@@ -28,3 +28,4 @@ router.get("/categories", getCategories);
 // Get All Users
 router.get("/users", getUsers);
 /*-----------------------------------------------------------------*/
+module.exports = router;
